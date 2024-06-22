@@ -1,0 +1,1 @@
+export const scale = 4;// set scale to control pixel size 
