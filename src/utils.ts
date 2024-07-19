@@ -14,29 +14,30 @@ export async function makeMap(k: KaboomCtx, name: string) {
             map.add([
                 k.area({
                     shape: new k.Rect(k.vec2(0), collider.width, collider.height),
-                    collisionIgnore:["platform", "exit"],
+                    collisionIgnore: ["platform", "exit"],
                 }),
                 collider.name !== "exit" ? k.body({isStatic: true}) : null,
                 k.pos(collider.x, collider.y),
-                collider.name !== "exit" ? "plastform" : "exit"
+                collider.name !== "exit" ? "platform" : "exit"
             ]);
         }
         continue;
       }
+      
       if(layer.name === "spawnpoints"){
-        for(const spawnPoint of layer.obects){
+        for(const spawnPoint of layer.objects){
             if(spawnPoints[spawnPoint.name]){
                 spawnPoints[spawnPoint.name].push({
                     x: spawnPoint.x,
                     y: spawnPoint.y,
-                })
+                });
                 continue;
             }
 
-            spawnPoints[spawnPoint.name] = [{ x: spawnPoint.x, y: spawnPoint.y }]
+            spawnPoints[spawnPoint.name] = [{ x: spawnPoint.x, y: spawnPoint.y }];
         }
       }
     }
 
-    return{ map, spawnPoints };
+    return {map, spawnPoints };
 } 

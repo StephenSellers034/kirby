@@ -1,5 +1,5 @@
 import kaboom from "kaboom";// used to import kaboom 
-import { scale } from "./constants"
+import { scale } from "./constants";
 export const k = kaboom({// used to initalize kaboom
     width: 256 * scale,// used to adress bug issues for scale size fits 16 by 9 ratio gameboy screen size
     height: 144 * scale,// multiplys scale by 4 to prevent issues in kaboom
