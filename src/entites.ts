@@ -81,7 +81,7 @@ export function makePlayer(k: KaboomCtx, posX: number, posY: number){
   player.onCollide("exit", () => {
     k.go("level-2");
   });
-
+  
   const inhaleEffect = k.add([
     k.sprite("assets", {anim: "kirbInhaleEffect" }),
     k.pos(),
@@ -112,6 +112,10 @@ export function makePlayer(k: KaboomCtx, posX: number, posY: number){
     if (player.pos.y > 2000) {
         k.go("level-1");
     }
+  });
+
+  player.onCollide("exit-2", () => {
+    k.go("level-3");
   });
 
   return player;
@@ -220,7 +224,7 @@ const flame = k.add([
     shape: new k.Rect(k.vec2(4,6), 8, 10),
     collisionIgnore: ["enemy"],
   }),
-  k.body({isStatic: true}),
+  k.body({}),
   k.state("idle", ["idle", "jump"]),
   { isInhalable: false},
   "enemy",

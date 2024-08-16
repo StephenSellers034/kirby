@@ -9,7 +9,7 @@ import { k } from "./kaboomctx";
 import { makeMap } from "./utils";
 
 async function gameSetup() {
-k.loadSprite("assets", "./kirby-like.png", {//loadSprite used to load from kaboom which is k
+k.loadSprite("assets", "./kirby-like.png", { //loadSprite used to load from kaboom which is k
     sliceX: 9,
     sliceY: 10,
     anims: {
@@ -77,7 +77,65 @@ for (const bird of level1SpawnPoints.bird) {
 }
 });
 
+k.loadSprite("level-2", "./level-2.png");
+
+const{map: level2Layout, spawnPoints: level2SpawnPoints} = await makeMap(
+    k,
+    "level-2"
+);
+
+k.scene("level-2", () => {
+    k.setGravity(2100);
+    k.add([
+        k.rect(k.width(), k.height()),
+        k.color(k.Color.fromHex("#dbc6ae")),
+        k.fixed(),
+    ]);
+
+    k.add(level2Layout);
+
+    const kirb = makePlayer(
+        k,
+        level2SpawnPoints.player[0].x,
+        level2SpawnPoints.player[0].y
+    );
+
+    setControls(k, kirb);
+    k.add(kirb);
+    k.camScale(0.7, 0.7);
+    k.onUpdate(() => {
+            k.camPos(kirb.pos);
+    });
+
+    for (const flame of level2SpawnPoints.flame) {
+        makeFlameEnemy(k, flame.x, flame.y);
+    }
+    
+    for (const guy of level2SpawnPoints.guy) {
+        makeGuyEnemy(k, guy.x, guy.y);
+    }
+    
+    for (const bird of level2SpawnPoints.bird) {
+        const possibleSpeeds = [200, 300, 400];
+        k.loop(10, () => {
+          makeBirdEnemy(
+            k,
+            bird.x,
+            bird.y,
+            possibleSpeeds[Math.floor(Math.random() * possibleSpeeds.length)]
+          );
+        });
+    }
+   
+});
+
+k.go("level-2");
 k.go("level-1");
+
+
+
+
 }
+
 
 gameSetup();
