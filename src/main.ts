@@ -129,6 +129,59 @@ k.scene("level-2", () => {
    
 });
 
+k.loadSprite("level-3", "./level-3.png");
+
+const{map: level3Layout, spawnPoints: level3SpawnPoints} = await makeMap(
+    k,
+    "level-3"
+);
+
+k.scene("level-3", () => {
+    k.setGravity(2100);
+    k.add([
+        k.rect(k.width(), k.height()),
+        k.color(k.Color.fromHex("#93b208")),
+        k.fixed(),
+    ]);
+
+    k.add(level3Layout);
+
+    const kirb = makePlayer(
+        k,
+        level3SpawnPoints.player[0].x,
+        level3SpawnPoints.player[0].y
+    );
+
+    setControls(k, kirb);
+    k.add(kirb);
+    k.camScale(0.7, 0.7);
+    k.onUpdate(() => {
+            k.camPos(kirb.pos);
+    });
+
+    for (const flame of level3SpawnPoints.flame) {
+        makeFlameEnemy(k, flame.x, flame.y);
+    }
+    
+    for (const guy of level3SpawnPoints.guy) {
+        makeGuyEnemy(k, guy.x, guy.y);
+    }
+    
+    for (const bird of level3SpawnPoints.bird) {
+        const possibleSpeeds = [200, 300, 400];
+        k.loop(10, () => {
+          makeBirdEnemy(
+            k,
+            bird.x,
+            bird.y,
+            possibleSpeeds[Math.floor(Math.random() * possibleSpeeds.length)]
+          );
+        });
+    }
+   
+});
+
+k.go("level-3");
 k.go("level-2");
 k.go("level-1");
 

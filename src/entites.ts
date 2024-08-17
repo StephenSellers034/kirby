@@ -47,6 +47,7 @@ export function makePlayer(k: KaboomCtx, posX: number, posY: number){
       "player",
     ]);
 
+    
     player.onCollide("enemy" , async (enemy : GameObj) => {
         if(player.isInhaling && enemy.isInhalable) {
             player.isInhaling = false;
@@ -77,6 +78,7 @@ export function makePlayer(k: KaboomCtx, posX: number, posY: number){
             k.easings.linear
         );
     });
+
 
   player.onCollide("exit", () => {
     k.go("level-2");
@@ -116,6 +118,10 @@ export function makePlayer(k: KaboomCtx, posX: number, posY: number){
 
   player.onCollide("exit-2", () => {
     k.go("level-3");
+  });
+
+  player.onCollide("exit-3", () => {
+    k.go("level-4");
   });
 
   return player;
